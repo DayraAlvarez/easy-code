@@ -1,19 +1,21 @@
 //Function that show profile section
-$('#news-feed').click(function(){
+$('.menu-newsfeed').click(function(){
     $('#left-section').css('display', 'block');
     $('#rigth-section').css('display', 'block');
     $('#newsfeed-section').css('display', 'block');
     $('#profile-section').css('display', 'none');
     $('#profile-section-content').css('display', 'none');
+    $('#images-right').css('display', 'none');
 })
 
 //Function that show news feed section
-$('#profile').click(function(){
+$('.menu-profile').click(function(){
     $('#left-section').css('display', 'none');
     $('#rigth-section').css('display', 'none');
     $('#newsfeed-section').css('display', 'none');
     $('#profile-section').css('display', 'block');
     $('#profile-section-content').css('display', 'block');
+    $('#images-right').css('display', 'block');
 })
 
 //Function that obtains data
@@ -168,36 +170,28 @@ function addNewFollowed(newFollow){
     $('#following').append(finalTemplate2);
 }
 
-//Function for
-
-$(document).ready(function(){
-    $('#publish').click(getTextData);
-    $('#publish2').click(getTextData);
-
-});
-
 function move() {
-  var elem = document.getElementById("statusBar");
-  var width = 10;
-  var id = setInterval(frame, 10);
-  function frame() {
+    var elem = document.getElementById("statusBar");
+    var width = 10;
+    var id = setInterval(frame, 10);
+    function frame() {
     if (width >= 100) {
-      clearInterval(id);
+        clearInterval(id);
     } else {
-      width++;
-      elem.style.width = width + '%';
-      elem.innerHTML = width * 1  + '%';
+        width++;
+        elem.style.width = width + '%';
+        elem.innerHTML = width * 1  + '%';
+        }
     }
-  }
 }
 
 var config = {
-  apiKey: "AIzaSyD7m-SNXr4XUXFoX9AqQTjIUW0cqxkTNKg",
-  authDomain: "easy-code-sn.firebaseapp.com",
-  databaseURL: "https://easy-code-sn.firebaseio.com",
-  projectId: "easy-code-sn",
-  storageBucket: "easy-code-sn.appspot.com",
-  messagingSenderId: "1075281073613"
+apiKey: "AIzaSyD7m-SNXr4XUXFoX9AqQTjIUW0cqxkTNKg",
+authDomain: "easy-code-sn.firebaseapp.com",
+databaseURL: "https://easy-code-sn.firebaseio.com",
+projectId: "easy-code-sn",
+storageBucket: "easy-code-sn.appspot.com",
+messagingSenderId: "1075281073613"
 };
 firebase.initializeApp(config);
 
@@ -207,28 +201,37 @@ var fileButton = document.getElementById('fileButton');
 
 //Listen to file selection
 fileButton.addEventListener('change', function(e) {
-  //Get file
-  var file = e.target.files[0];
-  //Create a storage ref
-  var storageRef = firebase.storage().ref('user_fotos/' + file.name);
-  var imageRef = storageRef.child('')
-  //Upload file
-  var task= storageRef.put(file);
-  //Update progress bar
-  task.on('state_changed',
+//Get file
+var file = e.target.files[0];
+//Create a storage ref
+var storageRef = firebase.storage().ref('user_fotos/' + file.name);
+var imageRef = storageRef.child('')
+//Upload file
+var task= storageRef.put(file);
+//Update progress bar
+task.on('state_changed',
 
-  function progess(snapshot){
+function progess(snapshot){
     var percentage = (snapshot.bytesTransferred /
     snapshot.totalBytes) * 100;
     uploder.value= percentage;
-  },
+}
 
-  function error (err) {
-
-  },
-
-  function complete () {
-
-  }
 );
 });
+
+$("#upload-picture").click(function(){
+    var img = $("#repl-img img");
+    img.attr("src", img.attr("src").replace("albumCover.png", "we-can-do-it.jpg"));
+})
+
+//Function ready document
+
+$(document).ready(function(){
+    $('#publish').click(getTextData);
+    $('#publish2').click(getTextData);
+
+});
+
+
+
